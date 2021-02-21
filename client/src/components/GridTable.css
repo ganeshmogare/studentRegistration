@@ -1,0 +1,57 @@
+.react-bootstrap-table {
+    overflow: auto !important;
+  }
+  
+  /*Added word-wrap for table cells*/
+  .react-bs-table .table-bordered>tbody>tr>td {
+    outline: 0!important;
+    word-break: break-word;
+    white-space: normal;
+  }
+  
+  /**
+    Columns colors
+  **/
+  
+  .td-header-info, .td-column-info{
+    color: #000;
+    background: #b3e5fc !important;
+  }
+  
+  .td-header-secondary, .td-column-secondary{
+    color: #000;
+    background: #80deea !important;
+  }
+  
+  .td-header-warning, .td-column-warning{
+    color: #000;
+    background: #ffcc80 !important;
+  }
+  
+  .td-header-success, .td-column-success{
+    color: #000;
+    background: #80cbc4 !important;
+  }
+  
+  .td-header-danger, .td-column-danger{
+    color: #fff;
+    background: #ef5350 !important;
+  }
+  
+  .btn{
+    @extend .ant-btn !optional;
+    line-height: 1.499;
+      position: relative;
+      display: inline-block;
+      font-weight: 400;
+      white-space: nowrap;
+      text-align: center;
+      border: 1px solid transparent;
+      -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+      cursor: pointer;
+      height: 32px;
+      padding: 0 15px;
+      font-size: 14px;
+      border-radius: 4px;
+  }

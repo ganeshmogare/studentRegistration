@@ -1,0 +1,40 @@
+{
+  "name": "studentCourseRegistration",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "cross-env": "^7.0.3",
+    "install": "^0.13.0",
+    "moment": "^2.29.1",
+    "npm": "^7.5.4",
+    "react": "^16.9.0",
+    "react-bootstrap-table": "^4.3.1",
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.1.0",
+    "reactstrap": "^8.9.0"
+  },
+  "scripts": {
+    "start": "cross-env REACT_APP_API_URL=http://localhost:5000 SKIP_PREFLIGHT_CHECK=true react-scripts start",
+    "build": "cross-env REACT_APP_API_URL=http://localhost:5000 SKIP_PREFLIGHT_CHECK=true react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
