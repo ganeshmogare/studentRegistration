@@ -21,20 +21,20 @@ const Subscriptions = props => {
     const getTableContents = async () => {   
         let response = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_API_URL}/api/subscriptions/list`
+            url: `${process.env.REACT_APP_API_URL}/subscriptions/list`
         });
         console.log(response);
-        setSubscriptionsData(response.data.docs);
+        setSubscriptionsData(response.data);
     };
 
     const getStudentsList = async () => {   
         let response = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_API_URL}/api/students/list`
+            url: `${process.env.REACT_APP_API_URL}/students/list`
         });
 
-        let { docs =[]} = response.data || {};
-        let formattedList = docs.map(ele=>{
+        let { data =[]} = response || {};
+        let formattedList = data.map(ele=>{
             return {
                 label: `${ele.firstName} ${ele.lastName}`,
                 value: ele._id
@@ -46,10 +46,10 @@ const Subscriptions = props => {
     const getCoursesList = async () => {   
         let response = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_API_URL}/api/courses/list`
+            url: `${process.env.REACT_APP_API_URL}/courses/list`
         });
-        let { docs =[]} = response.data || {};
-        let formattedList = docs.map(ele=>{
+        let { data =[]} = response || {};
+        let formattedList = data.map(ele=>{
             return {
                 label: `${ele.name}`,
                 value: ele._id

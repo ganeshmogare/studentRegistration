@@ -12,9 +12,9 @@ const UpdateStudent = props => {
     const onClickSave = async () => {
         let { _id } = selectedRecord;
         let response = await axios({
-            method: 'put',
-            url: `${process.env.REACT_APP_API_URL}/api/students/update/${_id}`,
-            data: formData
+            method: 'post',
+            url: `${process.env.REACT_APP_API_URL}/students/update/${_id}`,
+            data: JSON.stringify(formData)
         });
 
         closeModal();

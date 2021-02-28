@@ -8,10 +8,11 @@ const DeleteRecord = props => {
     const { closeModal, refreshGrid, selectedRecord, type } = props;
 
     const onClickDelete = async () => {
-        let { _id } = selectedRecord;
+        let { id } = selectedRecord;
         let response = await axios({
-            method: 'delete',
-            url: `${process.env.REACT_APP_API_URL}/api/${type}/delete/${_id}`
+            method: 'post',
+            url: `${process.env.REACT_APP_API_URL}/${type}/delete/${id}`,
+            data:JSON.stringify({id})
         });
 
         closeModal();

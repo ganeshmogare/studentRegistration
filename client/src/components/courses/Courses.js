@@ -23,10 +23,10 @@ const LeadsDashboard = props => {
         
         let response = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_API_URL}/api/courses/list`
+            url: `${process.env.REACT_APP_API_URL}/courses/list`
         });
         console.log(response);
-        setCourseData(response.data.docs);
+        setCourseData(response.data);
     };
 
     const handleUpdate =(row)=>{

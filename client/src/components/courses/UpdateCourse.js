@@ -9,11 +9,11 @@ const UpdateCourse = props => {
     const updateFormRef = useRef();
 
     const onClickSave = async () => {
-        let { _id } = selectedRecord;
+        let { id } = selectedRecord;
         let response = await axios({
-            method: 'put',
-            url: `${process.env.REACT_APP_API_URL}/api/courses/update/${_id}`,
-            data: formData
+            method: 'post',
+            url: `${process.env.REACT_APP_API_URL}/courses/update/${id}`,
+            data: JSON.stringify(formData)
         });
 
         closeModal();

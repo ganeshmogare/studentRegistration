@@ -14,10 +14,10 @@ const Reports = props => {
     const getTableContents = async () => {   
         let response = await axios({
             method: 'get',
-            url: `${process.env.REACT_APP_API_URL}/api/subscriptions/list`
+            url: `${process.env.REACT_APP_API_URL}/subscriptions/list`
         });
         console.log(response);
-        setSubscriptionsData(response.data.docs);
+        setSubscriptionsData(response.data);
     };
 
     const columns =[

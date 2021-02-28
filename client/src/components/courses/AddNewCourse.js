@@ -15,8 +15,8 @@ const AddNewCourse = props => {
     const onClickSave = async () => {
         let response = await axios({
             method: 'post',
-            url: `${process.env.REACT_APP_API_URL}/api/courses/create`,
-            data: formData
+            url: `${process.env.REACT_APP_API_URL}/courses/create`,
+            data: JSON.stringify(formData)
         });
 
         closeModal();

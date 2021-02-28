@@ -25,8 +25,8 @@ const AddNewSubscription = props => {
     const onClickSave = async () => {
         let response = await axios({
             method: 'post',
-            url: `${process.env.REACT_APP_API_URL}/api/subscriptions/create`,
-            data: formData
+            url: `${process.env.REACT_APP_API_URL}/subscriptions/create`,
+            data: JSON.stringify(formData)
         });
 
         closeModal();
