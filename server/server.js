@@ -1,35 +1,29 @@
-  const mongoose = require('mongoose');
-  const http = require('http');
-  const Promise = require('bluebird');
-  
-  process.on('unhandledRejection', err => console.error(err));
-  
-  const mongooseOptions = {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-    useUnifiedTopology: true
-  };
-  
-  mongoose.Promise = global.Promise;
-  const dbUrl = "mongodb://localhost:27017/students-courses"
-  mongoose.connect(dbUrl, mongooseOptions);
-  const db = mongoose.connection;
-  
-  db.on('error', function (err) {
-    console.error('Mongoose error', err);
-  });
-  
-  db.once('open', async function () {
-    global.byjus = {};
-    const port = process.env.PORT || 5000;
+const http = require("http");
 
-    require('./models');
-    const setupServer = require('./app');
-    const app = setupServer();
-    const server = http.createServer(app).listen(port);
-  
-    // console.info('Connected to db', config.db);
-    console.info('Application started on port', port);
+const DBHelper = require("./dbUtils/dbHelper");
+const StudentsDBHelper = require('./dbUtils/studentsDbHelper');
+const CoursesDBHelper = require('./dbUtils/coursesDbHelper');
+const SubscriptionsDBHelper = require('./dbUtils/subscriptionsDbHelper');
+
+const app = require("./app");
+
+const dao = new DBHelper('./students-courses.db');
+const students = new StudentsDBHelper(dao);
+const courses = new CoursesDBHelper(dao);
+const subscriptions = new SubscriptionsDBHelper(dao);
+global = {
+  students,
+  courses,
+  subscriptions
+}
+
+students.createTable()
+  .then(() => courses.createTable())
+  .then(() => subscriptions.createTable())
+  .then(() => {
+    const server = http.createServer(app);
+
+    server.listen(5000, function () {
+      console.log("Listening on port 5000");
+    });
   });
-  

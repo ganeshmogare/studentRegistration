@@ -1,5 +1,3 @@
-const { Courses } = require("../../models");
-
 const list = async(req, res)=>{
     try{
         const { page=1, limit=10 ,sort={}} = req.body;
@@ -10,10 +8,10 @@ const list = async(req, res)=>{
         };
 
         let filter ={};
-     let data =await Courses.paginate(filter,options);
-     res.send(data);
+        let data =await global.courses.getAll(options);
+        res.send(data);
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:JSON.stringify(e)
         })
     }
@@ -24,11 +22,11 @@ const create = async (req,res) =>{
         let { body: json } = req;
         json.createdAt= new Date();
 
-        let resp = await Courses.create(json);
+        let resp = await global.courses.create(json);
 
-        res.json({message:"Successfully added course record"});
+        res.send({message:"Successfully added course record"});
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message: "failed to insert course record"
         })
     }
@@ -36,18 +34,13 @@ const create = async (req,res) =>{
 
 const update = async (req, res)=>{
     try{
-        let { id } = req.params;
         let { body } = req;
-        let resp = await Courses.updateOne({_id: id},{
-            $set:{
-                ...body
-            }
-        });
+        let resp = await global.courses.update(body);
         
-        res.json({message:"successfully updated the record"});
+        res.send({message:"successfully updated the record"});
 
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to update the record"
         })
     }
@@ -55,19 +48,19 @@ const update = async (req, res)=>{
 
 const remove = async (req,res)=>{
     try{
-        let { id } = req.params;
-        let resp = await Courses.remove({_id: id});
-        res.json({message:"successfully deleted the record"});
+        let { id } = req.body;
+        let resp = await global.courses.delete(id);
+        res.send({message:"successfully deleted the record"});
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to delete the record"
         })
     }
 };
 
-module.exports={
-    list,
+module.exports ={
     create,
+    list,
     update,
     remove
-};
+}

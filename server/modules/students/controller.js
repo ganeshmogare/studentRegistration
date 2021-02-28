@@ -1,5 +1,3 @@
-const { Students } = require("../../models");
-
 const list = async(req, res)=>{
     try{
         const { page=1, limit=10 ,sort={}} = req.body;
@@ -10,10 +8,10 @@ const list = async(req, res)=>{
         };
 
         let filter ={};
-     let data =await Students.paginate(filter,options);
-     res.send(data);
+        let data =await global.students.getAll(options);
+        res.send(data);
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:JSON.stringify(e)
         })
     }
@@ -21,13 +19,14 @@ const list = async(req, res)=>{
 
 const create = async (req,res) =>{
     try{
-        
-        let { body } = req;
-        let resp = await Students.create(body);
+        let { body: json } = req;
+        json.createdAt= new Date();
 
-        res.json({message:"Successfully added student record"});
+        let resp = await global.students.create(json);
+
+        res.send({message:"Successfully added student record"});
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message: "failed to insert student record"
         })
     }
@@ -35,18 +34,13 @@ const create = async (req,res) =>{
 
 const update = async (req, res)=>{
     try{
-        let { id } = req.params;
         let { body } = req;
-        let resp = await Students.updateOne({_id: id},{
-            $set:{
-                ...body
-            }
-        });
+        let resp = await global.students.update(body);
         
-        res.json({message:"successfully updated the record"});
+        res.send({message:"successfully updated the record"});
 
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to update the record"
         })
     }
@@ -54,19 +48,19 @@ const update = async (req, res)=>{
 
 const remove = async (req,res)=>{
     try{
-        let { id } = req.params;
-        let resp = await Students.remove({_id: id});
-        res.json({message:"successfully deleted the record"});
+        let { id } = req.body;
+        let resp = await global.students.delete(id);
+        res.send({message:"successfully deleted the record"});
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to delete the record"
         })
     }
 };
 
-module.exports={
-    list,
+module.exports ={
     create,
+    list,
     update,
     remove
-};
+}

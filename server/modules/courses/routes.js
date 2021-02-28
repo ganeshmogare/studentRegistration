@@ -1,15 +1,18 @@
-var express = require('express');
-var controller = require("./controller");
-var router = express.Router();
+const controller =require("./controller");
 
-router.get('/list',  controller.list);
+const routes = {
+    list: controller.list,
+    create: controller.create,
+    update: controller.update,
+    delete: controller.remove,
+    notFound: function(data, res) {
+      //this one gets called if no route matches
+      let payload = {
+        message: "File Not Found",
+        code: 404
+      };
+      res.sendError(payload);
+    }
+  };
 
-router.post('/create',  controller.create);
-
-router.put('/update/:id',  controller.update);
-
-router.delete('/delete/:id',  controller.remove);
-
-// router.post('/reset-db',  leadsController.resetDb);
-
-module.exports = router;
+  module.exports= routes;

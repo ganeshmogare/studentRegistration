@@ -1,5 +1,3 @@
-const { Subscriptions } = require("../../models");
-
 const list = async(req, res)=>{
     try{
         const { page=1, limit=10 ,sort={}} = req.body;
@@ -10,10 +8,10 @@ const list = async(req, res)=>{
         };
 
         let filter ={};
-     let data =await Subscriptions.paginate(filter,options);
-     res.send(data);
+        let data =await global.subscriptions.getAll(options);
+        res.send(data);
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:JSON.stringify(e)
         })
     }
@@ -24,30 +22,25 @@ const create = async (req,res) =>{
         let { body: json } = req;
         json.createdAt= new Date();
 
-        let resp = await Subscriptions.create(json);
+        let resp = await global.subscriptions.create(json);
 
-        res.json({message:"Successfully registered for course"});
+        res.send({message:"Successfully added registration record"});
     }catch(e){
-        res.status(500).json({
-            message: "failed to insert subscription record"
+        res.sendError({
+            message: "failed to insert registration record"
         })
     }
 };
 
 const update = async (req, res)=>{
     try{
-        let { id } = req.params;
         let { body } = req;
-        let resp = await Subscriptions.updateOne({_id: id},{
-            $set:{
-                ...body
-            }
-        });
+        let resp = await global.subscriptions.update(body);
         
-        res.json({message:"successfully updated the record"});
+        res.send({message:"successfully updated the record"});
 
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to update the record"
         })
     }
@@ -55,19 +48,19 @@ const update = async (req, res)=>{
 
 const remove = async (req,res)=>{
     try{
-        let { id } = req.params;
-        let resp = await Subscriptions.remove({_id: id});
-        res.json({message:"successfully deleted the record"});
+        let { id } = req.body;
+        let resp = await global.subscriptions.delete(id);
+        res.send({message:"successfully deleted the record"});
     }catch(e){
-        res.status(500).json({
+        res.sendError({
             message:"failed to delete the record"
         })
     }
 };
 
-module.exports={
-    list,
+module.exports ={
     create,
+    list,
     update,
     remove
-};
+}

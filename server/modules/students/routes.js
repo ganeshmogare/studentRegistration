@@ -1,17 +1,18 @@
-const Router = require('express-promise-router');
+const controller =require("./controller");
 
-const controller = require('./controller');
+const routes = {
+    list: controller.list,
+    create: controller.create,
+    update: controller.update,
+    delete: controller.remove,
+    notFound: function(data, res) {
+      //this one gets called if no route matches
+      let payload = {
+        message: "File Not Found",
+        code: 404
+      };
+      res.sendError(payload);
+    }
+  };
 
-module.exports = () => {
-    const router = Router({ mergeParams: true });
-
-    router.get('/list',  controller.list);
-
-    router.post('/create',  controller.create);
-    
-    router.put('/update/:id',  controller.update);
-    
-    router.delete('/delete/:id',  controller.remove);
-
-    return router;
-}
+  module.exports= routes;
