@@ -10,7 +10,9 @@ class SubscriptionsDbHelper {
         courseName TEXT,
         studentName TEXT,
         courseId INTEGER,
-        studentId INTEGER)`
+        studentId INTEGER,
+        FOREIGN KEY(courseId) REFERENCES courses(id),
+        FOREIGN KEY(studentId) REFERENCES students(id))`
     return this.dao.run(sql)
   }
 
